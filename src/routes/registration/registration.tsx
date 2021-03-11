@@ -7,12 +7,10 @@ type State = {
   password: string;
   passwordConfirmation: string;
 }
-
-
-type Action = { type: "SET_FORM",  payload: {name: string, value: string}}
+ 
+type Action = { type: "SET_FORM",  payload: {name: string, value: string} }
 
 const formReducer = (state: State, action: Action ) => {
-    console.log(state, action);
     return {
       ...state,
       [action.payload.name]: action.payload.value
@@ -20,14 +18,12 @@ const formReducer = (state: State, action: Action ) => {
 }
 
 const Registration: FunctionalComponent = () => {
-    const [user, setUser] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
-    const [arePasswordsEqual, setArePasswordsEqual] = useState<boolean>(false);
+    const [passwordEquality, setPasswordEquality] = useState<boolean>(true);
     const [formData, setFormData] = useReducer(formReducer, {user:"", password:"", passwordConfirmation:""});
     const [submitting, setSubmitting] = useState<boolean>(false);
 
     const handleChange = ({currentTarget}: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+        console.log("change")
         setFormData({
             type: "SET_FORM",
             payload: {name: currentTarget.name, value: currentTarget.value}
@@ -36,8 +32,14 @@ const Registration: FunctionalComponent = () => {
 
     const handleSubmit = (event: JSX.TargetedEvent<HTMLFormElement, Event>) => {
         event.preventDefault();
-        console.log("SUBMIT");
-        setSubmitting(true);
+        const match = formData.password == formData.passwordConfirmation;
+        if (match && formData.password.length > 8) {
+            setSubmitting(true);
+            setPasswordEquality(match);
+        } else {
+            setPasswordEquality(match);
+        }
+       
         console.log(event);
         setTimeout(() => {
           setSubmitting(false);
@@ -47,7 +49,7 @@ const Registration: FunctionalComponent = () => {
     useEffect(() => {
         console.log("<LOGIN>");
         // handle session
-    }, [password, passwordConfirmation]);
+    }, []);
 
     return (
         <div className={`container `}>
@@ -68,6 +70,9 @@ const Registration: FunctionalComponent = () => {
                                 <input className="form-input lakelandcup-input-form" name="password" type="password" placeholder="password" onChange={handleChange} />
                             <label className="form-label"> 
                                 <input className="form-input lakelandcup-input-form" name="passwordConfirmation" type="password" placeholder="confirm password" onChange={handleChange} />
+                                {
+                                    (!passwordEquality || formData.password.length < 8) ? <p class="form-input-hint"> Password do not match or is less than 8 characters! </p> : null
+                                }
                             </label>
                             </label>
                             <label className="form-label"> 
@@ -77,16 +82,6 @@ const Registration: FunctionalComponent = () => {
                             </label>
                         </div>
                     </form>
-                    <div>
-                    <div>
-                        You are submitting the following:
-                        <ul>
-                        {Object.entries(formData).map(([name, value]) => (
-                            <li key={name}><strong>{name}</strong>:{value.toString()}</li>
-                        ))}
-                        </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

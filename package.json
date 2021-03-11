@@ -8,7 +8,9 @@
     "build": "webpack --config webpack.prod.config.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "package.json": "^2.0.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.13.8",
     "@babel/preset-env": "^7.13.9",
