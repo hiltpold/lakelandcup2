@@ -1,0 +1,8 @@
+.vscode
+config/
+node_modules/
+frontend/public/js/contrib/node_modules
+deploy.sh
+frontend/public/**/*.js
+*tar.gz
+.DS_Store
