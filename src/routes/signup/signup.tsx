@@ -1,6 +1,7 @@
 import preact, { FunctionalComponent, h, JSX } from "preact";
 import {useState, useEffect, useReducer} from "preact/hooks";
 import style from "./style.module.css";
+import config from "../../../config/okta"
 
 type State = {
   user: string;
@@ -36,6 +37,27 @@ const Registration: FunctionalComponent = () => {
         if (match && formData.password.length > 8) {
             setSubmitting(true);
             setPasswordEquality(match);
+            const profile = JSON.stringify({
+                    profile: {
+                      firstName: "Isaac",
+                      lastName: "Brock",
+                      email: "isaac.brock@example.com",
+                      login: "isaac.brock@example.com",
+                    },
+                    credentials: {
+                        password : { value: "test" }
+                }
+            });
+            console.log(profile);
+            fetch(`https://${config.OKTA_DOMAIN}/api/v1/users?activate=true`, { 
+                method: 'post', 
+                headers: new Headers({
+                   "Accept": "application/json",
+                   "Content-Type": "application/json",
+                   "Authorization": `SSWS ${config.OKTA_ACCESS_TOKEN}`
+                }), 
+                body: profile
+              });
         } else {
             setPasswordEquality(match);
         }
@@ -71,7 +93,7 @@ const Registration: FunctionalComponent = () => {
                             <label className="form-label"> 
                                 <input className="form-input lakelandcup-input-form" name="passwordConfirmation" type="password" placeholder="confirm password" onChange={handleChange} />
                                 {
-                                    (!passwordEquality || formData.password.length < 8) ? <p class="form-input-hint"> Password do not match or is less than 8 characters! </p> : null
+                                    (!passwordEquality || formData.password.length < 8) ? <p class="form-input-hint"> Password doe not match or is less than 8 characters! </p> : null
                                 }
                             </label>
                             </label>

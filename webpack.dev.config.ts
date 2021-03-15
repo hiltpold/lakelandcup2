@@ -1,10 +1,15 @@
 import path from "path";
-import { Configuration, HotModuleReplacementPlugin }  from "webpack";
+import { Configuration, HotModuleReplacementPlugin, DefinePlugin }  from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
 import {} from 'webpack-dev-server';
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import dotenv from "dotenv";
+
+dotenv.config( {
+    path: path.join(__dirname, '.env')
+ });
 
 const config: Configuration = {
   mode: "development",
@@ -30,7 +35,6 @@ const config: Configuration = {
       {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, {loader: "css-loader"}],
-        //use: [ "style-loader", { loader: "css-loader", options: { modules: true } } ] 
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
@@ -43,6 +47,10 @@ const config: Configuration = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    alias: {
+        "react": "preact/compat",
+        "react-dom": "preact/compat"
+      }
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -52,13 +60,18 @@ const config: Configuration = {
     new MiniCssExtractPlugin({
         filename: "[name].[contenthash].css",
     }),
+    new DefinePlugin({
+        "process.env.OKTA_CLIENT_ID": JSON.stringify(process.env.OKTA_CLIENT_ID),
+        "process.env.OKTA_DOMAIN": JSON.stringify(process.env.OKTA_DOMAIN),
+        "process.env.OKTA_LOGIN_REDIREC": JSON.stringify(process.env.OKTA_LOGIN_REDIRECT)
+    }),
   ],
   devtool: "inline-source-map",
   devServer: {
     contentBase: path.join(__dirname, "build"),
     historyApiFallback: true,
     port: 4000,
-    open: true,
+    open: false,
     hot: true,
   },
 };

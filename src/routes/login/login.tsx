@@ -33,7 +33,7 @@ const Login: FunctionalComponent<Props> = (props: Props) => {
                             <b> Don't have an account yet? </b>
                         </div>
                         <div>
-                            <b> Please register <a href="/registration">here</a>.</b>
+                            <b> Please register <a href="/signup">here</a>.</b>
                         </div>
                     </div>
                 </div>

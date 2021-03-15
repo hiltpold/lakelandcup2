@@ -3,8 +3,9 @@ import { Route, Router } from 'preact-router';
 
 import Hero from "./hero/hero";
 import Navbar from "./navbar/navbar";
-import Login from "../routes/login/login";
-import Registration from "../routes/registration/registration";
+//import Login from "../routes/login/login";
+//import Registration from "../routes/signup/registration";
+import League from "../routes/league";
 
 const App: FunctionalComponent = () => {
     return (
@@ -12,8 +13,7 @@ const App: FunctionalComponent = () => {
             <Hero/>
             <Navbar/>
             <Router>
-                <Login path="/login" />
-                <Registration path="/registration" />
+                <League path="/league" />
             </Router>
         </div>
     );
