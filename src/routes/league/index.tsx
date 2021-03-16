@@ -8,11 +8,14 @@ const League: FunctionalComponent = () =>   {
     const { user } = useAuth0();
     return (
         <div>
-            {JSON.stringify(user, null, 2)}
+            <h1>
+                In progress...
+            </h1>
+            {JSON.stringify(user)}
         </div>
     );
 }
 //export default League;
 export default withAuthenticationRequired(League, {
     onRedirecting: () => <Loading />,
-  });
+});

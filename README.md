@@ -1,5 +1,5 @@
 # lakelandcup
-# prerequisite
+# prerequisites
 * npm
 ## clone
 ```bash
