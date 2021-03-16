@@ -61,9 +61,9 @@ const config: Configuration = {
         filename: "[name].[contenthash].css",
     }),
     new DefinePlugin({
-        "process.env.OKTA_CLIENT_ID": JSON.stringify(process.env.OKTA_CLIENT_ID),
-        "process.env.OKTA_DOMAIN": JSON.stringify(process.env.OKTA_DOMAIN),
-        "process.env.OKTA_LOGIN_REDIREC": JSON.stringify(process.env.OKTA_LOGIN_REDIRECT)
+        "process.env.AUTH0_CLIENT_ID": JSON.stringify(process.env.AUTH0_CLIENT_ID),
+        "process.env.AUTH0_DOMAIN": JSON.stringify(process.env.AUTH0_DOMAIN),
+        "process.env.AUTH0_CLIENT_SECRET": JSON.stringify(process.env.AUTH0_CLIENT_SECRET)
     }),
   ],
   devtool: "inline-source-map",
