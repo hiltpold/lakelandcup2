@@ -7,13 +7,4 @@ import LoginButton from "./components/authbuttons/loginbutton";
 
 const node = document.getElementById('root') as Element;
 
-render(
-    <Auth0Provider
-      domain={config.AUTH0_DOMAIN}
-      clientId={config.AUTH0_CLIENT_ID}
-      redirectUri={window.location.origin}
-    >
-        <App/>
-    </Auth0Provider>,
-    document.body
-);
+render(<App/>, document.body);

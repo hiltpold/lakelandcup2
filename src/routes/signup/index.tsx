@@ -1,7 +1,6 @@
 import preact, { FunctionalComponent, h, JSX } from "preact";
 import {useState, useEffect, useReducer} from "preact/hooks";
 import style from "./style.module.css";
-import config from "../../../config/okta"
 
 type State = {
   user: string;
@@ -18,7 +17,7 @@ const formReducer = (state: State, action: Action ) => {
     }
 }
 
-const Registration: FunctionalComponent = () => {
+const Signup: FunctionalComponent = () => {
     const [passwordEquality, setPasswordEquality] = useState<boolean>(true);
     const [formData, setFormData] = useReducer(formReducer, {user:"", password:"", passwordConfirmation:""});
     const [submitting, setSubmitting] = useState<boolean>(false);
@@ -49,6 +48,7 @@ const Registration: FunctionalComponent = () => {
                 }
             });
             console.log(profile);
+            /*
             fetch(`https://${config.OKTA_DOMAIN}/api/v1/users?activate=true`, { 
                 method: 'post', 
                 headers: new Headers({
@@ -58,6 +58,7 @@ const Registration: FunctionalComponent = () => {
                 }), 
                 body: profile
               });
+            */
         } else {
             setPasswordEquality(match);
         }
@@ -109,4 +110,4 @@ const Registration: FunctionalComponent = () => {
         </div>
     );
 };
-export default Registration;
+export default Signup;
