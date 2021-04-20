@@ -5,3 +5,5 @@ deploy.sh
 frontend/public/**/*.js
 *tar.gz
 .DS_Store
+backend/dist/
+config

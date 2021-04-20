@@ -1,0 +1,35 @@
+version: '3'
+services:
+  lakelandcup_backend_api:
+    container_name: backend_user_api
+    build:
+      context: ./
+      dockerfile: ./backend/Dockerfile
+    ports:
+      - 9002:9002
+    depends_on:
+      - lakelandcup_postgres
+  lakelandcup_postgres:
+      image: postgres:13-alpine
+      container_name: lakelandcup_postgres
+      restart: always
+      env_file:
+        - ./config/postgres.env
+      volumes:
+        - database-data:/var/lib/postgresql/data
+        - ./backend/build/postgres:/docker-entrypoint-initdb.d/
+      ports:
+      - '5432:5432'
+  lakelandcup_pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: lakelandcup_pgadmin
+    restart: always
+    env_file:
+        - ./config/pgadmin.env
+    ports:
+      - '9001:80'
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+volumes:
+  database-data:
+  pgadmin-data:
